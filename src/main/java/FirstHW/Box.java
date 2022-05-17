@@ -18,14 +18,21 @@ public class Box<T extends Fruit> {
         }
     }
 
-    public boolean compare(Box<?> box) {
-        return this.getWeight() == box.getWeight();
+    public boolean compare(Box<?> another) {
+// return this.getWeight() == box.getWeight();//Сравнение чисел с плавающей точкой. Будут ложноотрицательные срабатывания
+        return Math.abs(getWeight()- another.getWeight()) < 0.0001;
     }
 
     public void addFruit(T frt, int num) {
         for (int i = 1; i <= num; i++) {
             box.add(frt);
         }
+    }
+
+    public void transferAll (Box <? super T> another) {
+        if (this == another) return;
+        another.box.addAll(box);
+        box.clear();
     }
 
 }
