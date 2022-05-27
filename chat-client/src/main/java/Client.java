@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 public class Client extends JFrame implements ActionListener, Thread.UncaughtExceptionHandler, SocketThreadListener {
     private static final int WIDTH = 600;
@@ -33,6 +34,8 @@ public class Client extends JFrame implements ActionListener, Thread.UncaughtExc
 
     private boolean shownIoErrors = false;
     private SocketThread socketThread;
+
+    private SimpleDateFormat formater = new SimpleDateFormat("HH:mm:ss");
 
     private Client() {
         Thread.setDefaultUncaughtExceptionHandler(this);
@@ -112,15 +115,16 @@ public class Client extends JFrame implements ActionListener, Thread.UncaughtExc
         tfMessage.setText(null);
         tfMessage.grabFocus();
         socketThread.sendMessage(Messages.getTypeBcastFromClient(msg));
-//        putLog(String.format("%s: %s", username, msg));
-//        wrtMsgToLogFile(msg, username);
+        Date date = new Date();
+        putLog(String.format("%s %s: %s", formater.format(date), username, msg));
+        wrtMsgToLogFile(msg, username, date);
 
     }
 //codewars, hackerrank, leetcode, codegame
 
-    private void wrtMsgToLogFile(String msg, String username) {
+    private void wrtMsgToLogFile(String msg, String username, Date date) {
         try (FileWriter out = new FileWriter("log.txt", true)) {
-            out.write(username + ": " + msg + "\n");
+            out.write(String.format(formater.format(date)) + " " + username + ": " + msg + "\n");
             out.flush();
         } catch (IOException e) {
             if (!shownIoErrors) {
