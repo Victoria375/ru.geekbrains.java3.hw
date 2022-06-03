@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
-public class Client extends JFrame implements ActionListener, Thread.UncaughtExceptionHandler, SocketThreadListener {
+public class Client extends JFrame implements ActionListener, Thread.UncaughtExceptionHandler,  SocketThreadListener {
     private static final int WIDTH = 600;
     private static final int HEIGHT = 300;
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss: ");
