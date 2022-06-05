@@ -5,11 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ChatServer implements ServerSocketThreadListener, SocketThreadListener {
     private final int SERVER_SOCKET_TIMEOUT = 2000;
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss: ");
     private Vector<SocketThread> clients = new Vector<>();
+    private static final Logger logger = LogManager.getLogger();
 
     private final ExecutorService executorService;
 
@@ -42,6 +45,7 @@ public class ChatServer implements ServerSocketThreadListener, SocketThreadListe
         msg = DATE_FORMAT.format(System.currentTimeMillis()) +
                 Thread.currentThread().getName() +
                 ": " + msg;
+        logger.info(msg);
         listener.onChatServerMessage(msg);
     }
 
